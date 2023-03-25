@@ -1,0 +1,32 @@
+@use "../utils" as *;
+.form{
+  padding: 1em;
+  background-color: $white;
+  box-shadow: 0 0 15px $light-gray;
+  &__comment-text{
+    margin-bottom: 1em;
+    padding: .8em;
+    width: 100%;
+    height: 80px;
+    border: 1px solid $light-gray;
+    border-radius: 8px;
+    font-family: $family;
+    resize: vertical;
+  }
+  &__bottom-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__btn{
+      padding: 1em 2em;
+      background-color: $moderate-blue;
+      color: $white;
+      text-transform: uppercase;
+      font-weight: $medium;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 8px;
+    }
+  }
+}

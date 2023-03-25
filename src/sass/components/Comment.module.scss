@@ -1,0 +1,58 @@
+@use "../utils" as *;
+.comment{
+  margin: 1em 0;
+  padding: 1em;
+  display: grid;
+  grid-template-areas:
+          "user user"
+          "content content"
+          "voting action";
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0 0 15px $light-gray;
+
+  @include respond-to('l'){
+    grid-template-areas:
+            "voting user action"
+            "voting content content";
+  }
+
+  &__header{
+    margin: .5em 0;
+    grid-area: user;
+    display: flex;
+    align-items: center;
+    span{
+      margin: 0 .5em;
+      &:first-of-type{
+        font-weight: $bold;
+      }
+      &:last-of-type{
+        color: $grayish-blue;
+      }
+    }
+  }
+  &__content{
+    grid-area: content;
+    p{
+      color: $dark-blue;
+    }
+  }
+  &__vote{
+    grid-area: voting;
+    justify-self: flex-start;
+    margin-top: 1em;
+    @include respond-to('l'){
+      margin: .8em;
+    }
+  }
+  &__actions{
+    grid-area: action;
+    justify-self: flex-end;
+    align-self: center;
+    margin-top: 1em;
+    @include respond-to('l'){
+      margin-top: 0;
+    }
+  }
+}
