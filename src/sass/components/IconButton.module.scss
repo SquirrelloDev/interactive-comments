@@ -1,0 +1,15 @@
+@use '../utils' as *;
+.ico-btn{
+  display: flex;
+  align-items: center;
+  border: 1px solid transparent;
+  background: none;
+  font-weight: $bold;
+  color: $moderate-blue;
+  &--danger{
+    color: $soft-red;
+  }
+  img{
+    margin-right: .5em;
+  }
+}
