@@ -2,7 +2,7 @@
 .vote{
   display: flex;
   align-items: center;
-  background-color: $light-gray;
+  background-color: $very-light-gray;
   border-radius: 8px;
   @include respond-to('l'){
     flex-direction: column;
@@ -13,6 +13,7 @@
     font-size: $standard;
     border: 1px solid transparent;
     overflow: hidden;
+    color: $grayish-blue;
   }
   &__score{
     padding: .5em;
