@@ -1,0 +1,19 @@
+@use "../utils" as *;
+.vote{
+  display: flex;
+  align-items: center;
+  background-color: $light-gray;
+  border-radius: 8px;
+  &__btn{
+    padding: .65em;
+    background: none;
+    font-size: $standard;
+    border: 1px solid transparent;
+    overflow: hidden;
+  }
+  &__score{
+    padding: .5em;
+    color: $moderate-blue;
+
+  }
+}
