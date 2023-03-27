@@ -10,10 +10,13 @@
   &__btn{
     padding: .65em;
     background: none;
-    font-size: $standard;
     border: 1px solid transparent;
     overflow: hidden;
     color: $grayish-blue;
+    cursor: pointer;
+    &:last-child{
+      padding-bottom: 1em;
+    }
   }
   &__score{
     padding: .5em;

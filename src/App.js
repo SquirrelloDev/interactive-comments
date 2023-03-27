@@ -1,8 +1,12 @@
-function App() {
-  return (
-    <div className="App">
+import {useState} from "react";
+import Wrapper from "./components/UI/Wrapper";
 
-    </div>
+function App() {
+  const [loggedUser, setLoggedUser] = useState('julisomo');
+  return (
+    <>
+      <Wrapper/>
+    </>
   );
 }
 
