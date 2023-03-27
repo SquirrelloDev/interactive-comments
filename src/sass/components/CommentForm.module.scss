@@ -1,9 +1,17 @@
 @use "../utils" as *;
 .form{
+  display: grid;
+  grid-template-areas:
+          "text text"
+          "img btn";
   padding: 1em;
   background-color: $white;
   box-shadow: 0 0 15px $light-gray;
+  @include respond-to('l'){
+    display: flex;
+  }
   &__comment-text{
+    grid-area: text;
     margin-bottom: 1em;
     padding: .8em;
     width: 100%;
@@ -12,12 +20,26 @@
     border-radius: 8px;
     font-family: $family;
     resize: vertical;
+    @include respond-to('l'){
+      order: 1;
+    }
   }
   &__bottom-section{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    //display: flex;
+    //justify-content: space-between;
+    //align-items: center;
+    &__avatar{
+      grid-area: img;
+      align-self: center;
+      @include respond-to('l'){
+        margin-right: .6em;
+        order: 0;
+        align-self: flex-start;
+      }
+    }
     &__btn{
+      grid-area: btn;
+      justify-self: flex-end;
       padding: 1em 2em;
       background-color: $moderate-blue;
       color: $white;
@@ -27,6 +49,11 @@
       cursor: pointer;
       border: 1px solid transparent;
       border-radius: 8px;
+      @include respond-to('l'){
+        margin-left: .75em;
+        order: 2;
+        align-self: flex-start;
+      }
     }
   }
 }

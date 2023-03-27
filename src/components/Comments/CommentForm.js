@@ -5,10 +5,10 @@ const CommentForm = () => {
   return(
       <form className={classes.form}>
           <textarea className={classes['form__comment-text']} placeholder={"Add a comment..."}/>
-          <div className={classes['form__bottom-section']}>
+          <div className={classes['form__bottom-section__avatar']}>
               <Avatar/>
-              <button className={classes['form__bottom-section__btn']}>Send</button>
           </div>
+              <button className={classes['form__bottom-section__btn']}>Send</button>
       </form>
   )
 }
