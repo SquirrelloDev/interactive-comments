@@ -56,7 +56,9 @@
     }
   }
   &__reply{
-    padding-left: 2.5em;
+    margin-left: 2.5em;
+    padding-left: 1em;
+    border-left: 2px solid $light-gray;
     background: none;
   }
 }
