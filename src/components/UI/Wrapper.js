@@ -1,11 +1,11 @@
-import CommentCointainer from "../Comments/CommentCointainer";
+import Comments from "../Comments/Comments";
 import CommentForm from "../Comments/CommentForm";
 import classes from "../../sass/components/Wrapper.module.scss";
 
 const Wrapper = () => {
   return (
       <div className={classes.wrapper}>
-          <CommentCointainer/>
+          <Comments/>
           <CommentForm/>
       </div>
   )
