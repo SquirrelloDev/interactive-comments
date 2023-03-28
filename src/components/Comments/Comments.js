@@ -1,22 +1,22 @@
 import Comment from "./Comment";
 import useFileData from "../../hooks/use-file-data";
-import {useEffect} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 const Comments = () => {
     const {fileData} = useFileData('./data.json');
-    const populateInitData = () => {
-        if(!localStorage.getItem('currentUser') || !localStorage.getItem('comments')){
-            localStorage.setItem('currentUser', JSON.stringify(fileData.currentUser))
+    const [comments, setComments] = useState([]);
+    const populateInitCommentData = useCallback(() => {
+        if(!localStorage.getItem('comments')){
             localStorage.setItem('comments', JSON.stringify(fileData.comments))
         }
         else{
-            console.warn("Data already pupulated")
+            console.warn("Comments already populated")
         }
 
-    }
+    }, [fileData])
     useEffect(() =>{
-        populateInitData();
-    }, [populateInitData])
+        populateInitCommentData();
+    }, [populateInitCommentData])
     return (
         <div>
             <Comment replies={[1]}/>
