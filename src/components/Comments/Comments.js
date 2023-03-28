@@ -11,6 +11,7 @@ const Comments = () => {
         }
         else{
             console.warn("Comments already populated")
+            setComments(JSON.parse(localStorage.getItem('comments')));
         }
 
     }, [fileData])
@@ -19,8 +20,7 @@ const Comments = () => {
     }, [populateInitCommentData])
     return (
         <div>
-            <Comment replies={[1]}/>
-            <Comment replies={[1]}/>
+            {comments.map(comment => <Comment key={comment.id} id={comment.id} replies={comment.replies} content={comment.content} user={comment.user} createdAt={comment.createdAt}/>)}
         </div>
 
     )

@@ -1,5 +1,4 @@
-import testImg from '../../images/avatars/image-amyrobson.png'
-const Avatar = () => {
-    return <img src={testImg} alt={"User profile"} width={30}/>
+const Avatar = ({srcImg}) => {
+    return <img src={srcImg} alt={"User profile"} width={30}/>
 }
 export default Avatar;
