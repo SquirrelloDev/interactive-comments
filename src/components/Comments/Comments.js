@@ -5,6 +5,11 @@ import {useCallback, useEffect, useState} from "react";
 const Comments = () => {
     const {fileData} = useFileData('./data.json');
     const [comments, setComments] = useState([]);
+    const [activeComment, setActiveComment] = useState(null);
+    const setReplyComment = (id) => {
+      setActiveComment({type: 'replying', id})
+    }
+
     const populateInitCommentData = useCallback(() => {
         if(!localStorage.getItem('comments')){
             localStorage.setItem('comments', JSON.stringify(fileData.comments))
@@ -20,7 +25,8 @@ const Comments = () => {
     }, [populateInitCommentData])
     return (
         <div>
-            {comments.map(comment => <Comment key={comment.id} id={comment.id} replies={comment.replies} content={comment.content} user={comment.user} createdAt={comment.createdAt}/>)}
+            {comments.map(comment => <Comment key={comment.id} id={comment.id} replies={comment.replies} content={comment.content} user={comment.user} createdAt={comment.createdAt}
+            activeComment={activeComment} setActiveComment={setActiveComment}/>)}
         </div>
 
     )

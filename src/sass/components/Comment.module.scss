@@ -50,6 +50,7 @@
     grid-area: action;
     justify-self: flex-end;
     align-self: center;
+    display: flex;
     margin-top: 1em;
     @include respond-to('l'){
       margin-top: 0;
