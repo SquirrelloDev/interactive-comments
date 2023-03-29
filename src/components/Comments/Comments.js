@@ -1,16 +1,19 @@
 import Comment from "./Comment";
 import useFileData from "../../hooks/use-file-data";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
+import authContext from "../../context/auth-context";
 
 const Comments = () => {
     const {fileData} = useFileData('./data.json');
     const [comments, setComments] = useState([]);
     const [activeComment, setActiveComment] = useState(null);
+    const authCtx = useContext(authContext);
     const setReplyComment = (id) => {
       setActiveComment({type: 'replying', id})
     }
 
     const populateInitCommentData = useCallback(() => {
+        console.log(authCtx)
         if(!localStorage.getItem('comments')){
             localStorage.setItem('comments', JSON.stringify(fileData.comments))
         }

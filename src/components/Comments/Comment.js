@@ -10,7 +10,9 @@ const Comment = ({id,content, createdAt, user, replies, activeComment, setActive
     // const setReply = () =>{
     //     setReplyComment(id);
     // }
+
     const {username, image} = user;
+    const isUserComment = username;
   return (
       <>
           <div className={classes.comment}>
