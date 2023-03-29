@@ -5,13 +5,14 @@ const useFileData = (filePath) => {
     const getFileData = async (path) =>{
         const res = await fetch(path);
         const data = await res.json();
-        setFileData(data);
+        return data;
     }
-    useEffect(() => {
-        getFileData(filePath)
-    }, [filePath])
+    // useEffect(() => {
+    //     getFileData(filePath)
+    // }, [filePath])
     return{
-        fileData
+        fileData,
+        getFileData
     }
 }
 export default useFileData;
