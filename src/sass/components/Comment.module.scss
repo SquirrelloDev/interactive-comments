@@ -22,6 +22,14 @@
     grid-area: user;
     display: flex;
     align-items: center;
+    &__badge{
+      padding: .25em .5em;
+      color: $white;
+      font-size: calc($standard - .4rem);
+      font-weight: $bold;
+      background-color: $moderate-blue;
+      border-radius: 4px;
+    }
     span{
       margin: 0 .5em;
       &:first-of-type{
