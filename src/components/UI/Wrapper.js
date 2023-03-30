@@ -5,6 +5,7 @@ import classes from "../../sass/components/Wrapper.module.scss";
 const Wrapper = () => {
   return (
       <div className={classes.wrapper}>
+
           <Comments/>
           <CommentForm/>
       </div>

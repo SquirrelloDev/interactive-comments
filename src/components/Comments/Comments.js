@@ -2,33 +2,23 @@ import Comment from "./Comment";
 import useFileData from "../../hooks/use-file-data";
 import {useCallback, useContext, useEffect, useState} from "react";
 import authContext from "../../context/auth-context";
+import commentContext from "../../context/comment-context";
 
 const Comments = () => {
-    const {fileData} = useFileData('./data.json');
     const [comments, setComments] = useState([]);
     const [activeComment, setActiveComment] = useState(null);
     const authCtx = useContext(authContext);
-    const setReplyComment = (id) => {
-      setActiveComment({type: 'replying', id})
-    }
+    const commentCtx= useContext(commentContext);
 
     const populateInitCommentData = useCallback(() => {
-        console.log(authCtx)
-        if(!localStorage.getItem('comments')){
-            localStorage.setItem('comments', JSON.stringify(fileData.comments))
-        }
-        else{
-            console.warn("Comments already populated")
-            setComments(JSON.parse(localStorage.getItem('comments')));
-        }
-
-    }, [fileData])
+            setComments(commentCtx.comments);
+    }, [commentCtx.comments])
     useEffect(() =>{
         populateInitCommentData();
     }, [populateInitCommentData])
     return (
         <div>
-            {comments.map(comment => <Comment key={comment.id} id={comment.id} replies={comment.replies} content={comment.content} user={comment.user} createdAt={comment.createdAt}
+            {commentCtx.comments.map(comment => <Comment key={comment.id} id={comment.id} replies={comment.replies} score={comment.score} content={comment.content} user={comment.user} createdAt={comment.createdAt}
             activeComment={activeComment} setActiveComment={setActiveComment}/>)}
         </div>
 

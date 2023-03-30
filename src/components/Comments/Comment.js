@@ -8,12 +8,14 @@ import deleteIcon from '../../images/icon-delete.svg'
 import ReplyContainer from "../Replies/ReplyContainer";
 import {useContext} from "react";
 import authContext from "../../context/auth-context";
-const Comment = ({id,content, createdAt, user, replies, activeComment, setActiveComment}) => {
+import CommentForm from "./CommentForm";
+const Comment = ({id,content, createdAt, user, score, replies, activeComment, setActiveComment, parentId = null}) => {
     const authCtx = useContext(authContext);
     // const setReply = () =>{
     //     setReplyComment(id);
     // }
-
+    const isReplying = activeComment && activeComment.type === 'replying' && activeComment.id === id;
+    const replyId = parentId ? parentId : id;
     const {username, image} = user;
     const isUserComment = username === authCtx.username;
   return (
@@ -21,7 +23,7 @@ const Comment = ({id,content, createdAt, user, replies, activeComment, setActive
           <div className={classes.comment}>
               <div className={classes.comment__header}><Avatar srcImg={image.png}/><span>{username}</span> {isUserComment && <span className={classes.comment__header__badge}>you</span>} <span>{createdAt}</span> </div>
               <div className={classes.comment__content}><p>{content}</p></div>
-              <div className={classes.comment__vote}><Vote/></div>
+              <div className={classes.comment__vote}><Vote commentId={id} score={score} parentId={parentId}/></div>
               <div className={classes.comment__actions}>
                   {isUserComment &&
                       <>
@@ -32,7 +34,8 @@ const Comment = ({id,content, createdAt, user, replies, activeComment, setActive
                   {!isUserComment && <IconButton onClickFn={() => setActiveComment({id, type:'replying'})} icon={replyIcon}>Reply</IconButton> }
               </div>
           </div>
-          {replies.length > 0 && <ReplyContainer setReplyComment={setActiveComment} replies={replies}/>}
+          {isReplying && <CommentForm/>}
+          {replies.length > 0 && <ReplyContainer activeComment={activeComment} setReplyComment={setActiveComment} replies={replies} parentId={id}/>}
       </>
 
 
