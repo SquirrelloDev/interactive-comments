@@ -1,8 +1,11 @@
 import classes from "../../sass/components/Vote.module.scss";
 import plusIcon from "../../images/icon-plus.svg";
 import minusIcon from "../../images/icon-minus.svg";
-import {useEffect, useReducer} from "react";
+import {useContext, useEffect, useReducer} from "react";
+import commentContext from "../../context/comment-context";
 const Vote = ({commentId,score, parentId}) => {
+    const commentCtx = useContext(commentContext);
+
   const updateScore = (state, action) => {
         if(action.type === 'UP'){
             if(state.voteState === 'upvote'){
@@ -47,17 +50,9 @@ const Vote = ({commentId,score, parentId}) => {
       score: score
   })
     useEffect(() =>{
-        const commentsData = JSON.parse(localStorage.getItem('comments'));
+        commentCtx.modifyScore(parentId, commentId, voteData.score);
         // console.log(commentsData);
-        const parentComment = commentsData.find((comment) => {
-            return comment.id === parentId;
-        })
-        const rootComment = !parentComment ? commentsData.find(comment => comment.id === commentId) : null;
-
-        
-
-        console.log(rootComment);
-    }, [voteData, commentId]);
+    }, [voteData.score, commentId, parentId]);
   return (
       <div className={classes.vote}>
           <button onClick={() => dispatchFn({type: 'UP'})} className={classes.vote__btn}><img src={plusIcon} alt={"Upvote icon"}/></button>
