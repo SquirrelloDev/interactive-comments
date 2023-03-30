@@ -8,12 +8,8 @@ const Comments = () => {
     const [comments, setComments] = useState([]);
     const [activeComment, setActiveComment] = useState(null);
     const authCtx = useContext(authContext);
-    const setReplyComment = (id) => {
-      setActiveComment({type: 'replying', id})
-    }
 
     const populateInitCommentData = useCallback(() => {
-        console.log(authCtx)
         if(!localStorage.getItem('comments')){
             localStorage.setItem('comments', JSON.stringify(fileData.comments))
         }
@@ -28,7 +24,7 @@ const Comments = () => {
     }, [populateInitCommentData])
     return (
         <div>
-            {comments.map(comment => <Comment key={comment.id} id={comment.id} replies={comment.replies} content={comment.content} user={comment.user} createdAt={comment.createdAt}
+            {comments.map(comment => <Comment key={comment.id} id={comment.id} replies={comment.replies} score={comment.score} content={comment.content} user={comment.user} createdAt={comment.createdAt}
             activeComment={activeComment} setActiveComment={setActiveComment}/>)}
         </div>
 
