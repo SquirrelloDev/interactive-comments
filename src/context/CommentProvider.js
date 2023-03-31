@@ -1,13 +1,15 @@
 import commentContext from "./comment-context";
 import useFileData from "../hooks/use-file-data";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
+import authContext from "./auth-context";
 const CommentProvider = ({children}) => {
+    const authCtx = useContext(authContext);
     const {getFileData} = useFileData();
     const [comments, setComments] = useState([]);
 
     const populateComments = useCallback(async () => {
         const test = localStorage.getItem('comments');
-        if(test.length === 0){
+        if(!test || test.length === 0){
             const commentsData = await getFileData('./data.json');
             setComments(commentsData.comments);
         }
@@ -48,6 +50,29 @@ const CommentProvider = ({children}) => {
             setComments(updatedComments);
         }
     }
+    const addComment = (type = 'new', replyId = null, commentMetaData) => {
+        const {text} = commentMetaData;
+      if(type === 'new'){
+          const newComment = {
+              id: Math.floor(Math.random() * 12000),
+              createdAt: "2 montsh ago xD",
+              content: text,
+              score: 0,
+              user: {
+                  username: authCtx.username,
+                  image: authCtx.image
+              },
+              replies: []
+          }
+          setComments(prevState => {
+              return [...prevState, newComment];
+          })
+
+      }
+      else if(type === 'reply'){
+
+      }
+    }
 
     useEffect(() => {
 
@@ -65,7 +90,8 @@ const CommentProvider = ({children}) => {
     }, [comments])
     const value = {
         comments,
-        modifyScore
+        modifyScore,
+        addComment
     }
   return <commentContext.Provider value={value}>{children}</commentContext.Provider>
 }
