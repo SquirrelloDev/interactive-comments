@@ -35,9 +35,7 @@ const CommentProvider = ({children}) => {
             }
             parentComment.replies[childCommentIndex] = updatedScoreComment;
             updatedComments = [...comments];
-            console.log(parentComment)
             updatedComments[parentCommentIndex] = parentComment;
-            console.log(updatedComments);
             setComments(updatedComments);
         }
         else if(rootComment){
@@ -50,7 +48,7 @@ const CommentProvider = ({children}) => {
             setComments(updatedComments);
         }
     }
-    const addComment = (type = 'new', replyId = null, commentMetaData) => {
+    const addComment = (type = 'new', replyId = null, childId=null, commentMetaData) => {
         const {text} = commentMetaData;
       if(type === 'new'){
           const newComment = {
@@ -71,15 +69,17 @@ const CommentProvider = ({children}) => {
       }
       else if(type === 'reply'){
           let updatedComments;
+
           const parentCommentIdx = comments.findIndex(comment => comment.id === replyId);
+          //TODO: check if reply refers to root comment or to child comment (for proper "replyTo" prop to load)
           const parentComment = comments[parentCommentIdx];
-          const parentCommentUser = parentComment.user.username;
+          const commentUser = replyId !== childId ? parentComment.replies.find(reply => reply.id === childId).user.username : parentComment.user.username;
           const newReply = {
               id: Math.floor(Math.random() * 12000),
               createdAt: "2 montsh ago xD",
               content: text,
               score: 0,
-              replyingTo: parentCommentUser,
+              replyingTo: commentUser,
               user: {
                   username: authCtx.username,
                   image: authCtx.image
@@ -93,9 +93,7 @@ const CommentProvider = ({children}) => {
     }
 
     useEffect(() => {
-
         populateComments();
-
     }, [])
     useEffect(() => {
         if(comments.length === 0){
