@@ -100,6 +100,27 @@ const CommentProvider = ({children}) => {
       }
     }
 
+  const deleteComment = (parentId,commentId) => {
+      let updatedComments;
+      const parentCommentIndex = comments.findIndex((comment) => {
+          return comment.id === parentId;
+      })
+      const parentComment = comments[parentCommentIndex];
+      if(parentId !== commentId){
+          //comment type: reply
+          const newReplies = parentComment.replies.filter(reply => reply.id !== commentId);
+          parentComment.replies = newReplies;
+          updatedComments = [...comments];
+          updatedComments[parentCommentIndex] = parentComment;
+          setComments(updatedComments);
+      }
+      else{
+          const newComments = comments.filter(comment => comment.id !== commentId);
+          setComments(newComments);
+      }
+
+
+  }
     useEffect(() => {
         populateComments();
     }, [])
@@ -112,7 +133,8 @@ const CommentProvider = ({children}) => {
     const value = {
         comments,
         modifyScore,
-        addComment
+        addComment,
+        deleteComment
     }
   return <commentContext.Provider value={value}>{children}</commentContext.Provider>
 }

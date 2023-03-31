@@ -28,6 +28,9 @@ const Comment = ({id,content, createdAt, user, score, replies, activeComment, se
       commentCtx.modifyScore('EDIT', replyId, id, null, text);
         setActiveComment(null);
     }
+    const deleteComment = (parentId, commentId) => {
+      commentCtx.deleteComment(parentId, commentId);
+    }
   return (
       <>
           {!isEditing &&
@@ -38,7 +41,7 @@ const Comment = ({id,content, createdAt, user, score, replies, activeComment, se
               <div className={classes.comment__actions}>
                   {isUserComment &&
                       <>
-                          <IconButton danger icon={deleteIcon}>Delete</IconButton>
+                          <IconButton danger onClickFn={() => deleteComment(replyId, id)} icon={deleteIcon}>Delete</IconButton>
                           <IconButton onClickFn={() => setActiveComment({id, type:'editing'})} icon={editIcon}>Edit</IconButton>
                       </>
                   }

@@ -7,11 +7,10 @@ import commentContext from "../../context/comment-context";
 const Wrapper = () => {
     const commentCtx = useContext(commentContext);
     const addNewComment = (text) => {
-        commentCtx.addComment('new',null,{text: text})
+        commentCtx.addComment('new',null, null,{text: text})
     }
   return (
       <div className={classes.wrapper}>
-
           <Comments/>
           <CommentForm handleSubmit={addNewComment}/>
       </div>
