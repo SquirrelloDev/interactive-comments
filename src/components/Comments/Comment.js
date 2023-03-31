@@ -24,6 +24,10 @@ const Comment = ({id,content, createdAt, user, score, replies, activeComment, se
       commentCtx.addComment('reply', replyId, id, {text: text});
       setActiveComment(null);
     };
+    const editComment = (text) => {
+      commentCtx.modifyScore('EDIT', replyId, id, null, text);
+        setActiveComment(null);
+    }
   return (
       <>
           {!isEditing &&
@@ -42,7 +46,7 @@ const Comment = ({id,content, createdAt, user, score, replies, activeComment, se
               </div>
           </div>
           }
-          {isEditing && <CommentForm initText={content}/>}
+          {isEditing && <CommentForm initText={content} handleSubmit={editComment}/>}
           {isReplying && <CommentForm replyId={replyId}  handleSubmit={createReply}/>}
           {replies.length > 0 && <ReplyContainer activeComment={activeComment} setReplyComment={setActiveComment} replies={replies} parentId={id}/>}
       </>

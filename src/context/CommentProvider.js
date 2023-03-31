@@ -18,7 +18,7 @@ const CommentProvider = ({children}) => {
         }
     }, [getFileData])
 
-    const modifyScore = (parentId, commentId, score) =>{
+    const modifyScore = (mode='', parentId, commentId, score = null, text) =>{
         let updatedComments;
         const parentCommentIndex = comments.findIndex((comment) => {
             return comment.id === parentId;
@@ -29,20 +29,30 @@ const CommentProvider = ({children}) => {
         if(parentComment){
             const childCommentIndex = parentComment.replies.findIndex(reply => reply.id === commentId);
             const childComment = parentComment.replies[childCommentIndex];
-            const updatedScoreComment = {
-                ...childComment,
-                score: score
-            }
+            const updatedScoreComment = mode === 'SCORE' ? {
+                    ...childComment,
+                    score: score
+                }
+                :
+                {
+                    ...childComment,
+                    content: text
+                }
             parentComment.replies[childCommentIndex] = updatedScoreComment;
             updatedComments = [...comments];
             updatedComments[parentCommentIndex] = parentComment;
             setComments(updatedComments);
         }
         else if(rootComment){
-            const updatedComment = {
-                ...rootComment,
-                score: score
-            }
+            const updatedComment = mode === 'SCORE' ? {
+                    ...rootComment,
+                    score: score
+                }
+                :
+                {
+                    ...rootComment,
+                    content: text
+                }
             updatedComments = [...comments];
             updatedComments[rootCommentIndex] = updatedComment;
             setComments(updatedComments);
@@ -69,9 +79,7 @@ const CommentProvider = ({children}) => {
       }
       else if(type === 'reply'){
           let updatedComments;
-
           const parentCommentIdx = comments.findIndex(comment => comment.id === replyId);
-          //TODO: check if reply refers to root comment or to child comment (for proper "replyTo" prop to load)
           const parentComment = comments[parentCommentIdx];
           const commentUser = replyId !== childId ? parentComment.replies.find(reply => reply.id === childId).user.username : parentComment.user.username;
           const newReply = {
