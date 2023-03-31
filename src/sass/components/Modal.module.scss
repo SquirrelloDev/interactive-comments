@@ -1,0 +1,67 @@
+@use "../utils" as *;
+.modal{
+  &__backdrop{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.7);
+    isolation: isolate;
+    z-index: 0;
+  }
+  &__content{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    padding: 1.25em;
+    font-family: $family;
+    transform: translate(-50%,-50%);
+    background-color: $white;
+    border-radius: 8px;
+    z-index: 10;
+    @include respond-to('s'){
+      width: auto;
+    }
+  }
+}
+.delete{
+  &__heading{
+    margin-bottom: .5em;
+    font-weight: $medium;
+  }
+  &__text{
+    margin-bottom: 1em;
+    color: $grayish-blue;
+  }
+  &__btns{
+    display: flex;
+    justify-content: space-between;
+    @include respond-to('s'){
+      justify-content: space-evenly;
+    }
+    &__cancel, &__confirm{
+      padding: 1em 1.35em;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      color: $white;
+      text-transform: uppercase;
+      font-family: $family;
+      font-size: $standard;
+      font-weight: $medium;
+      cursor: pointer;
+      @include respond-to('l'){
+        padding: .75em 1.5em;
+      }
+    }
+    &__cancel{
+      background-color: $grayish-blue;
+
+    }
+    &__confirm{
+      background-color: $soft-red;
+    }
+  }
+
+}
