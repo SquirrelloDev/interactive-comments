@@ -6,36 +6,52 @@ import replyIcon from '../../images/icon-reply.svg'
 import editIcon from '../../images/icon-edit.svg'
 import deleteIcon from '../../images/icon-delete.svg'
 import ReplyContainer from "../Replies/ReplyContainer";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import authContext from "../../context/auth-context";
 import CommentForm from "./CommentForm";
-const Comment = ({id,content, createdAt, user, score, replies, activeComment, setActiveComment, parentId = null}) => {
+import commentContext from "../../context/comment-context";
+import DeleteModal, {DeletePrompt} from "../UI/DeleteModal";
+const Comment = ({id,content, createdAt, user, score, replies, activeComment, setActiveComment, replyingTo = null, parentId = null}) => {
     const authCtx = useContext(authContext);
-    // const setReply = () =>{
-    //     setReplyComment(id);
-    // }
+    const commentCtx = useContext(commentContext);
+    const [modalVisible, setModalVisible] = useState(false);
     const isReplying = activeComment && activeComment.type === 'replying' && activeComment.id === id;
+    const isEditing = activeComment && activeComment.type ==='editing' && activeComment.id === id;
     const replyId = parentId ? parentId : id;
     const {username, image} = user;
     const isUserComment = username === authCtx.username;
+    const replyMention = replyingTo ? `@${replyingTo}` : '';
+    const createReply = (text) => {
+      commentCtx.addComment('reply', replyId, id, {text: text});
+      setActiveComment(null);
+    };
+    const editComment = (text) => {
+      commentCtx.modifyScore('EDIT', replyId, id, null, text);
+        setActiveComment(null);
+    }
+
   return (
       <>
-          <div className={classes.comment}>
+          {!isEditing &&
+              <div className={classes.comment}>
               <div className={classes.comment__header}><Avatar srcImg={image.png}/><span>{username}</span> {isUserComment && <span className={classes.comment__header__badge}>you</span>} <span>{createdAt}</span> </div>
-              <div className={classes.comment__content}><p>{content}</p></div>
+              <div className={classes.comment__content}><p><span>{replyMention}</span> {content}</p></div>
               <div className={classes.comment__vote}><Vote commentId={id} score={score} parentId={parentId}/></div>
               <div className={classes.comment__actions}>
                   {isUserComment &&
                       <>
-                          <IconButton danger icon={deleteIcon}>Delete</IconButton>
+                          <IconButton danger onClickFn={() => setModalVisible(true)} icon={deleteIcon}>Delete</IconButton>
                           <IconButton onClickFn={() => setActiveComment({id, type:'editing'})} icon={editIcon}>Edit</IconButton>
                       </>
-                      }
+                  }
                   {!isUserComment && <IconButton onClickFn={() => setActiveComment({id, type:'replying'})} icon={replyIcon}>Reply</IconButton> }
               </div>
           </div>
-          {isReplying && <CommentForm/>}
+          }
+          {isEditing && <CommentForm initText={content} handleSubmit={editComment}/>}
+          {isReplying && <CommentForm replyId={replyId}  handleSubmit={createReply}/>}
           {replies.length > 0 && <ReplyContainer activeComment={activeComment} setReplyComment={setActiveComment} replies={replies} parentId={id}/>}
+          {modalVisible && <DeleteModal><DeletePrompt parentId={replyId} commentId={id} closeModalFn={() => setModalVisible(false)}/></DeleteModal>}
       </>
 
 

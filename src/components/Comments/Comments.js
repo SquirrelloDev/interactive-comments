@@ -18,7 +18,7 @@ const Comments = () => {
     }, [populateInitCommentData])
     return (
         <div>
-            {commentCtx.comments.map(comment => <Comment key={comment.id} id={comment.id} replies={comment.replies} score={comment.score} content={comment.content} user={comment.user} createdAt={comment.createdAt}
+            {commentCtx.comments.map(comment => <Comment key={comment.id} id={comment.id}  replies={comment.replies} score={comment.score} content={comment.content} user={comment.user} createdAt={comment.createdAt}
             activeComment={activeComment} setActiveComment={setActiveComment}/>)}
         </div>
 

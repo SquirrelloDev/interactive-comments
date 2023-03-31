@@ -44,6 +44,10 @@
     grid-area: content;
     p{
       color: $dark-blue;
+      span{
+        color: $moderate-blue;
+        font-weight: $bold;
+      }
     }
   }
   &__vote{
