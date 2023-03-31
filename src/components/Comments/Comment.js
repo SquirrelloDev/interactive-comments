@@ -6,14 +6,15 @@ import replyIcon from '../../images/icon-reply.svg'
 import editIcon from '../../images/icon-edit.svg'
 import deleteIcon from '../../images/icon-delete.svg'
 import ReplyContainer from "../Replies/ReplyContainer";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import authContext from "../../context/auth-context";
 import CommentForm from "./CommentForm";
 import commentContext from "../../context/comment-context";
+import DeleteModal, {DeletePrompt} from "../UI/DeleteModal";
 const Comment = ({id,content, createdAt, user, score, replies, activeComment, setActiveComment, replyingTo = null, parentId = null}) => {
     const authCtx = useContext(authContext);
     const commentCtx = useContext(commentContext);
-
+    const [modalVisible, setModalVisible] = useState(false);
     const isReplying = activeComment && activeComment.type === 'replying' && activeComment.id === id;
     const isEditing = activeComment && activeComment.type ==='editing' && activeComment.id === id;
     const replyId = parentId ? parentId : id;
@@ -28,9 +29,7 @@ const Comment = ({id,content, createdAt, user, score, replies, activeComment, se
       commentCtx.modifyScore('EDIT', replyId, id, null, text);
         setActiveComment(null);
     }
-    const deleteComment = (parentId, commentId) => {
-      commentCtx.deleteComment(parentId, commentId);
-    }
+
   return (
       <>
           {!isEditing &&
@@ -41,7 +40,7 @@ const Comment = ({id,content, createdAt, user, score, replies, activeComment, se
               <div className={classes.comment__actions}>
                   {isUserComment &&
                       <>
-                          <IconButton danger onClickFn={() => deleteComment(replyId, id)} icon={deleteIcon}>Delete</IconButton>
+                          <IconButton danger onClickFn={() => setModalVisible(true)} icon={deleteIcon}>Delete</IconButton>
                           <IconButton onClickFn={() => setActiveComment({id, type:'editing'})} icon={editIcon}>Edit</IconButton>
                       </>
                   }
@@ -52,6 +51,7 @@ const Comment = ({id,content, createdAt, user, score, replies, activeComment, se
           {isEditing && <CommentForm initText={content} handleSubmit={editComment}/>}
           {isReplying && <CommentForm replyId={replyId}  handleSubmit={createReply}/>}
           {replies.length > 0 && <ReplyContainer activeComment={activeComment} setReplyComment={setActiveComment} replies={replies} parentId={id}/>}
+          {modalVisible && <DeleteModal><DeletePrompt parentId={replyId} commentId={id} closeModalFn={() => setModalVisible(false)}/></DeleteModal>}
       </>
 
 
