@@ -20,6 +20,9 @@ const Comment = ({id,content, createdAt, user, score, replies, activeComment, se
     const {username, image} = user;
     const isUserComment = username === authCtx.username;
     const replyMention = replyingTo ? `@${replyingTo}` : '';
+    const createReply = (text) => {
+      commentCtx.addComment('reply', replyId, {text: text})
+    };
   return (
       <>
           {!isEditing &&
@@ -39,7 +42,7 @@ const Comment = ({id,content, createdAt, user, score, replies, activeComment, se
           </div>
           }
           {isEditing && <CommentForm initText={content}/>}
-          {isReplying && <CommentForm replyId={replyId}/>}
+          {isReplying && <CommentForm replyId={replyId} handleSubmit={createReply}/>}
           {replies.length > 0 && <ReplyContainer activeComment={activeComment} setReplyComment={setActiveComment} replies={replies} parentId={id}/>}
       </>
 

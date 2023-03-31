@@ -70,7 +70,25 @@ const CommentProvider = ({children}) => {
 
       }
       else if(type === 'reply'){
-
+          let updatedComments;
+          const parentCommentIdx = comments.findIndex(comment => comment.id === replyId);
+          const parentComment = comments[parentCommentIdx];
+          const parentCommentUser = parentComment.user.username;
+          const newReply = {
+              id: Math.floor(Math.random() * 12000),
+              createdAt: "2 montsh ago xD",
+              content: text,
+              score: 0,
+              replyingTo: parentCommentUser,
+              user: {
+                  username: authCtx.username,
+                  image: authCtx.image
+              },
+          }
+          parentComment.replies = [...parentComment.replies, newReply];
+          updatedComments = [...comments];
+          updatedComments[parentCommentIdx] = parentComment;
+          setComments(updatedComments);
       }
     }
 
@@ -80,9 +98,6 @@ const CommentProvider = ({children}) => {
 
     }, [])
     useEffect(() => {
-        // if(localStorage.getItem('comments')){
-        //     return;
-        // }
         if(comments.length === 0){
             return;
         }
