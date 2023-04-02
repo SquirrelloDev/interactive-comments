@@ -51,7 +51,7 @@ const Comment = ({id,content, createdAt, user, score, replies, activeComment, se
           </div>
           }
           {isEditing && <CommentForm initText={content} handleSubmit={editComment}/>}
-          {isReplying && <CommentForm replyId={replyId}  handleSubmit={createReply}/>}
+          {isReplying && <CommentForm handleSubmit={createReply}/>}
           {replies.length > 0 && <ReplyContainer activeComment={activeComment} setReplyComment={setActiveComment} replies={replies} parentId={id}/>}
           {modalVisible && <DeleteModal><DeletePrompt parentId={replyId} commentId={id} closeModalFn={() => setModalVisible(false)}/></DeleteModal>}
       </>
