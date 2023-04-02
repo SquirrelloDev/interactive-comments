@@ -7,6 +7,7 @@ const CommentProvider = ({children}) => {
     const {getFileData} = useFileData();
     const [comments, setComments] = useState([]);
 
+
     const populateComments = useCallback(async () => {
         const test = localStorage.getItem('comments');
         if(!test || test.length === 0){
@@ -59,11 +60,12 @@ const CommentProvider = ({children}) => {
         }
     }
     const addComment = (type = 'new', replyId = null, childId=null, commentMetaData) => {
+        //TODO: change this from destructuring to primitive value
         const {text} = commentMetaData;
       if(type === 'new'){
           const newComment = {
               id: Math.floor(Math.random() * 12000),
-              createdAt: "2 montsh ago xD",
+              createdAt: new Date().toISOString(),
               content: text,
               score: 0,
               user: {
@@ -84,7 +86,7 @@ const CommentProvider = ({children}) => {
           const commentUser = replyId !== childId ? parentComment.replies.find(reply => reply.id === childId).user.username : parentComment.user.username;
           const newReply = {
               id: Math.floor(Math.random() * 12000),
-              createdAt: "2 montsh ago xD",
+              createdAt: new Date().toISOString(),
               content: text,
               score: 0,
               replyingTo: commentUser,

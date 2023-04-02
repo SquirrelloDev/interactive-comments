@@ -11,10 +11,12 @@ import authContext from "../../context/auth-context";
 import CommentForm from "./CommentForm";
 import commentContext from "../../context/comment-context";
 import DeleteModal, {DeletePrompt} from "../UI/DeleteModal";
+import useTimeFormat from "../../hooks/use-time-format";
 const Comment = ({id,content, createdAt, user, score, replies, activeComment, setActiveComment, replyingTo = null, parentId = null}) => {
     const authCtx = useContext(authContext);
     const commentCtx = useContext(commentContext);
     const [modalVisible, setModalVisible] = useState(false);
+    const formattedTime = useTimeFormat(createdAt);
     const isReplying = activeComment && activeComment.type === 'replying' && activeComment.id === id;
     const isEditing = activeComment && activeComment.type ==='editing' && activeComment.id === id;
     const replyId = parentId ? parentId : id;
@@ -34,7 +36,7 @@ const Comment = ({id,content, createdAt, user, score, replies, activeComment, se
       <>
           {!isEditing &&
               <div className={classes.comment}>
-              <div className={classes.comment__header}><Avatar srcImg={image.png}/><span>{username}</span> {isUserComment && <span className={classes.comment__header__badge}>you</span>} <span>{createdAt}</span> </div>
+              <div className={classes.comment__header}><Avatar srcImg={image.png}/><span>{username}</span> {isUserComment && <span className={classes.comment__header__badge}>you</span>} <span>{formattedTime}</span> </div>
               <div className={classes.comment__content}><p><span>{replyMention}</span> {content}</p></div>
               <div className={classes.comment__vote}><Vote commentId={id} score={score} parentId={parentId}/></div>
               <div className={classes.comment__actions}>
