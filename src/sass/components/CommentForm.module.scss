@@ -7,6 +7,9 @@
   padding: 1em;
   background-color: $white;
   box-shadow: 0 0 15px $light-gray;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 900px;
   @include respond-to('l'){
     display: flex;
   }
