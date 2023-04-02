@@ -59,9 +59,8 @@ const CommentProvider = ({children}) => {
             setComments(updatedComments);
         }
     }
-    const addComment = (type = 'new', replyId = null, childId=null, commentMetaData) => {
+    const addComment = (type = 'new', replyId = null, childId=null, text) => {
         //TODO: change this from destructuring to primitive value
-        const {text} = commentMetaData;
       if(type === 'new'){
           const newComment = {
               id: Math.floor(Math.random() * 12000),

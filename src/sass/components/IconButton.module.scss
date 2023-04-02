@@ -8,10 +8,24 @@
   font-weight: $bold;
   color: $moderate-blue;
   cursor: pointer;
+  transition: color .2s;
+  &:hover{
+    color: $light-grayish-blue;
+    img{
+      filter: brightness(250%);
+    }
+  }
   &--danger{
     color: $soft-red;
+    &:hover{
+      color: $pale-red;
+      img{
+        filter: brightness(180%);
+      }
+    }
   }
   img{
     margin-right: .5em;
+    transition: filter .3s;
   }
 }

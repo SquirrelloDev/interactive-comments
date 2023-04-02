@@ -51,7 +51,6 @@ const Vote = ({commentId,score, parentId}) => {
   })
     useEffect(() =>{
         commentCtx.modifyScore('SCORE' ,parentId, commentId, voteData.score);
-        // console.log(commentsData);
     }, [voteData.score, commentId, parentId]);
   return (
       <div className={classes.vote}>

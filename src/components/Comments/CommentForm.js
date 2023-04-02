@@ -2,15 +2,15 @@ import classes from "../../sass/components/CommentForm.module.scss";
 import Avatar from "../UI/Avatar";
 import {useContext, useRef, useState} from "react";
 import authContext from "../../context/auth-context";
-import commentContext from "../../context/comment-context";
 
-const CommentForm = ({replyId = null, formMode = null, handleSubmit, initText=''}) => {
-    const [commentText, setCommentText] = useState(initText);
+const CommentForm = ({handleSubmit, initText=''}) => {
+    const [commentText] = useState(initText);
     const commentRef = useRef();
     const authCtx = useContext(authContext);
     const submitForm = (e) => {
       e.preventDefault();
       handleSubmit(commentRef.current.value);
+      commentRef.current.value = '';
     }
   return(
       <form onSubmit={submitForm} className={classes.form}>

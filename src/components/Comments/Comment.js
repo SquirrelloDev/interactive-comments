@@ -24,7 +24,7 @@ const Comment = ({id,content, createdAt, user, score, replies, activeComment, se
     const isUserComment = username === authCtx.username;
     const replyMention = replyingTo ? `@${replyingTo}` : '';
     const createReply = (text) => {
-      commentCtx.addComment('reply', replyId, id, {text: text});
+      commentCtx.addComment('reply', replyId, id,  text);
       setActiveComment(null);
     };
     const editComment = (text) => {
