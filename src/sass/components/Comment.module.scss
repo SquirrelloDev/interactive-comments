@@ -13,6 +13,7 @@
   box-shadow: 0 0 15px $light-gray;
 
   @include respond-to('l'){
+    grid-template-columns: .1fr 1fr 1fr;
     grid-template-areas:
             "voting user action"
             "voting content content";
