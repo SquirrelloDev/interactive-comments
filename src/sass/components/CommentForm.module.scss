@@ -22,7 +22,11 @@
     border: 1px solid $light-gray;
     border-radius: 8px;
     font-family: $family;
-    resize: vertical;
+    resize: none;
+    outline: none;
+    &:focus{
+      border-color: $moderate-blue;
+    }
     @include respond-to('l'){
       order: 1;
     }
@@ -52,6 +56,10 @@
       cursor: pointer;
       border: 1px solid transparent;
       border-radius: 8px;
+      transition: background-color .2s;
+      &:hover{
+        background-color: $light-grayish-blue;
+      }
       @include respond-to('l'){
         margin-left: .75em;
         order: 2;

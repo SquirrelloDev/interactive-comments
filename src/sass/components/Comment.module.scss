@@ -65,6 +65,29 @@
     align-self: center;
     display: flex;
     margin-top: 1em;
+
+    button{
+      transition: color .2s;
+      img{
+        transition: filter .3s;
+      }
+      &:first-child{
+        &:hover{
+          color: $pale-red;
+          img{
+            filter: brightness(180%);
+          }
+        }
+      }
+      &:last-child{
+        &:hover{
+          color: $light-grayish-blue;
+          img{
+            filter: brightness(250%);
+          }
+        }
+      }
+    }
     @include respond-to('l'){
       margin-top: 0;
     }
@@ -76,6 +99,7 @@
     max-width: 860px;
     @include respond-to('m'){
       margin-left: 2.5em;
+      padding-left: 2.5em;
     }
   }
 }
