@@ -7,6 +7,7 @@
           "user user"
           "content content"
           "voting action";
+  max-width: 900px;
   background-color: $white;
   border-radius: 8px;
   box-shadow: 0 0 15px $light-gray;
@@ -69,9 +70,12 @@
     }
   }
   &__reply{
-    margin-left: 2.5em;
     padding-left: 1em;
     border-left: 2px solid $light-gray;
     background: none;
+    max-width: 860px;
+    @include respond-to('m'){
+      margin-left: 2.5em;
+    }
   }
 }
