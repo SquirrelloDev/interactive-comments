@@ -19,7 +19,7 @@ const CommentProvider = ({children}) => {
         }
     }, [getFileData])
 
-    const modifyScore = (mode='', parentId, commentId, score = null, text) =>{
+    const modifyScore = (parentId, commentId, score) =>{
         let updatedComments;
         const parentCommentIndex = comments.findIndex((comment) => {
             return comment.id === parentId;
@@ -27,32 +27,23 @@ const CommentProvider = ({children}) => {
         const parentComment = comments[parentCommentIndex];
         const rootCommentIndex = !parentComment ? comments.findIndex(comment => comment.id === commentId) : -1;
         const rootComment = comments[rootCommentIndex];
-        if(parentComment){
+        console.log(parentId, commentId);
+        if(parentComment && !rootComment){
             const childCommentIndex = parentComment.replies.findIndex(reply => reply.id === commentId);
             const childComment = parentComment.replies[childCommentIndex];
-            const updatedScoreComment = mode === 'SCORE' ? {
+            const updatedScoreComment = {
                     ...childComment,
                     score: score
-                }
-                :
-                {
-                    ...childComment,
-                    content: text
                 }
             parentComment.replies[childCommentIndex] = updatedScoreComment;
             updatedComments = [...comments];
             updatedComments[parentCommentIndex] = parentComment;
             setComments(updatedComments);
         }
-        else if(rootComment){
-            const updatedComment = mode === 'SCORE' ? {
+        else if(rootComment && !parentComment){
+            const updatedComment = {
                     ...rootComment,
                     score: score
-                }
-                :
-                {
-                    ...rootComment,
-                    content: text
                 }
             updatedComments = [...comments];
             updatedComments[rootCommentIndex] = updatedComment;
@@ -60,7 +51,6 @@ const CommentProvider = ({children}) => {
         }
     }
     const addComment = (type = 'new', replyId = null, childId=null, text) => {
-        //TODO: change this from destructuring to primitive value
       if(type === 'new'){
           const newComment = {
               id: Math.floor(Math.random() * 12000),
@@ -100,7 +90,40 @@ const CommentProvider = ({children}) => {
           setComments(updatedComments);
       }
     }
+    const editComment = (parentId, commentId, text) => {
+        let updatedComments;
+        const parentCommentIdx = comments.findIndex(comment => comment.id === parentId);
+        const parentComment = comments[parentCommentIdx];
+        console.log(parentId, commentId);
+        if(parentId !== commentId){
+            //reply
+            const replyIdx = parentComment.replies.findIndex(reply => reply.id === commentId);
+            const reply = parentComment.replies[replyIdx];
 
+            const updatedReply = {
+                ...reply,
+                content: text
+            }
+            console.log(updatedReply)
+            updatedComments = [...comments]
+            parentComment.replies[replyIdx] = updatedReply;
+            console.log(parentComment[replyIdx]);
+            updatedComments[parentCommentIdx] = parentComment;
+            console.log(updatedComments[parentCommentIdx])
+            setComments(updatedComments);
+        }
+        else{
+            //root
+            const updatedRootComment = {
+                ...parentComment,
+                content: text
+            }
+            updatedComments = [...comments];
+            updatedComments[parentCommentIdx] = updatedRootComment;
+            setComments(updatedComments);
+
+        }
+    }
   const deleteComment = (parentId,commentId) => {
       let updatedComments;
       const parentCommentIndex = comments.findIndex((comment) => {
@@ -135,6 +158,7 @@ const CommentProvider = ({children}) => {
         comments,
         modifyScore,
         addComment,
+        editComment,
         deleteComment
     }
   return <commentContext.Provider value={value}>{children}</commentContext.Provider>

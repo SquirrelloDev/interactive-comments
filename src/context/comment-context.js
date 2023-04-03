@@ -1,8 +1,9 @@
 import React from "react";
 const initalValue = {
     comments: [],
-    modifyScore: (mode='', parentId, commentId, score, text) =>{},
+    modifyScore: (parentId, commentId, score) =>{},
     addComment: (type = 'new', replyId = null, childId = null, commentMetaData) => {},
+    editComment: (parentId, commentId, text) => {},
     deleteComment: (parentId, commentId) => {}
 }
 const commentContext = React.createContext(initalValue);

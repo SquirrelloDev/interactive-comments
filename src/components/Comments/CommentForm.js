@@ -9,6 +9,9 @@ const CommentForm = ({handleSubmit, initText=''}) => {
     const authCtx = useContext(authContext);
     const submitForm = (e) => {
       e.preventDefault();
+      if(commentRef.current.value === ''){
+          return;
+      }
       handleSubmit(commentRef.current.value);
       commentRef.current.value = '';
     }
