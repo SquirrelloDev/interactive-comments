@@ -27,7 +27,6 @@ const CommentProvider = ({children}) => {
         const parentComment = comments[parentCommentIndex];
         const rootCommentIndex = !parentComment ? comments.findIndex(comment => comment.id === commentId) : -1;
         const rootComment = comments[rootCommentIndex];
-        console.log(parentId, commentId);
         if(parentComment && !rootComment){
             const childCommentIndex = parentComment.replies.findIndex(reply => reply.id === commentId);
             const childComment = parentComment.replies[childCommentIndex];
@@ -94,9 +93,7 @@ const CommentProvider = ({children}) => {
         let updatedComments;
         const parentCommentIdx = comments.findIndex(comment => comment.id === parentId);
         const parentComment = comments[parentCommentIdx];
-        console.log(parentId, commentId);
         if(parentId !== commentId){
-            //reply
             const replyIdx = parentComment.replies.findIndex(reply => reply.id === commentId);
             const reply = parentComment.replies[replyIdx];
 
@@ -104,16 +101,13 @@ const CommentProvider = ({children}) => {
                 ...reply,
                 content: text
             }
-            console.log(updatedReply)
+
             updatedComments = [...comments]
             parentComment.replies[replyIdx] = updatedReply;
-            console.log(parentComment[replyIdx]);
             updatedComments[parentCommentIdx] = parentComment;
-            console.log(updatedComments[parentCommentIdx])
             setComments(updatedComments);
         }
         else{
-            //root
             const updatedRootComment = {
                 ...parentComment,
                 content: text
@@ -131,7 +125,6 @@ const CommentProvider = ({children}) => {
       })
       const parentComment = comments[parentCommentIndex];
       if(parentId !== commentId){
-          //comment type: reply
           const newReplies = parentComment.replies.filter(reply => reply.id !== commentId);
           parentComment.replies = newReplies;
           updatedComments = [...comments];
