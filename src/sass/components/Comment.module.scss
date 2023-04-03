@@ -44,8 +44,10 @@
   }
   &__content{
     grid-area: content;
+    //width: 2ch;
     p{
       color: $dark-blue;
+      word-break: break-word;
       span{
         color: $moderate-blue;
         font-weight: $bold;
